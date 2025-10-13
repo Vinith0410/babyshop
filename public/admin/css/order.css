@@ -1,0 +1,141 @@
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+      margin-top: 20px;
+    }
+
+    .search-container {
+      text-align: center;
+      margin: 20px;
+    }
+
+    .search-container input {
+      padding: 8px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .search-container button {
+      padding: 8px 12px;
+      margin-left: 8px;
+      border: none;
+      border-radius: 4px;
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+    .btn-download{
+            padding: 8px 12px;
+      margin-left: 8px;
+      border: none;
+      border-radius: 4px;
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+      float: right;
+    }
+    .search-container button:hover {
+      background: #0056b3;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      min-width: 1100px; /* force scroll if small screen */
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+      vertical-align: top;
+    }
+
+    th {
+      background: #007bff;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    .status-select {
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background: #fff;
+    }
+
+    .product-mini-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .product-img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .customer-cell, .delivery-cell {
+      text-align: left;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    td.customer-cell:hover,
+    td.delivery-cell:hover {
+      background-color: #fff8dc; /* light yellow highlight */
+      border: 2px solid #ff9800;
+      transition: all 0.3s ease;
+    }
+
+    /* Pagination styles */
+    .pagination {
+      text-align: center;
+      margin: 20px;
+    }
+
+    .pagination button {
+      margin: 0 3px;
+      padding: 6px 12px;
+      border: 1px solid #007bff;
+      background: #fff;
+      color: #007bff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .pagination button.active {
+      background: #007bff;
+      color: #fff;
+    }
+
+    .pagination button:hover {
+      background: #0056b3;
+      color: #fff;
+    }
+
+    /* Increase Delivery Address column width */
+    #ordersTable th:nth-child(4),
+    #ordersTable td:nth-child(4) {
+      width: 250px; /* you can adjust to 350px or 400px as needed */
+      min-width: 200px;
+    }
+

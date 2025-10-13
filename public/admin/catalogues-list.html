@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue List</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/catalogues.css">
+</head>
+<body>
+
+  <nav class="navbar">
+  <h2 class="logo">Admin Panel</h2>
+  <label for="menu-checkbox" class="menu-toggle">&#9776;</label>
+  <ul class="nav-links">
+    <li><a href="/admin/add-product">Add Product</a></li>
+    <li><a href="/admin/add-catalogues">Add-Catalogues</a></li>
+    <li><a href="/admin/view-product">List Products</a></li>
+    <li><a href="/admin/edit-catalogues">List Catalogues</a></li>
+    <li><a href="/admin/orders">Order Product</a></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</nav>
+
+<h2>Catalogue List</h2>
+<div class="table-container">
+  <table id="catalogueTable">
+    <thead>
+      <tr>
+        <th>Catalogue Name</th>
+        <th>Models</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Filled dynamically -->
+    </tbody>
+  </table>
+</div>
+
+<script src="./js/catalogues-list.js"></script>
+<script src="./js/script.js"></script>
+</body>
+</html>

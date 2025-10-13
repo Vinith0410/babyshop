@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/add-product.css">
+  <title>Edit Product</title>
+
+</head>
+<body>
+  <nav class="navbar">
+  <h2 class="logo">Admin Panel</h2>
+  <label for="menu-checkbox" class="menu-toggle">&#9776;</label>
+  <ul class="nav-links">
+    <li><a href="/admin/add-product">Add Product</a></li>
+    <li><a href="/admin/add-catalogues">Add-Catalogues</a></li>
+    <li><a href="/admin/view-product">List Products</a></li>
+    <li><a href="/admin/edit-catalogues">List Catalogues</a></li>
+    <li><a href="/admin/orders">Order Product</a></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</nav>
+
+  <div class="container">
+    <h2>Edit Product</h2>
+          <form id="editForm" enctype="multipart/form-data" method="POST">
+            <input type="hidden" name="productId" id="productId">
+
+            <!-- Name -->
+            <div>
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" required>
+            </div>
+
+            <!-- Price -->
+            <div >
+              <label for="price">Price</label>
+              <input type="number" name="price" id="price" required>
+            </div>
+
+            <!-- Discount -->
+            <div>
+              <label for="discount">Discount</label>
+              <input type="number" name="discount" id="discount">
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label for="description" class="form-label">You Tube Link</label>
+              <textarea class="form-control" name="description" id="description" rows="4"></textarea>
+            </div>
+
+            <!-- Extra Description -->
+             <!-- About -->
+            <div>
+              <label for="about" class="form-label">About</label>
+              <textarea class="form-control" name="about" id="about" rows="4"></textarea>
+            </div>
+
+
+            <!-- Current Image -->
+            <div>
+              <label>Current Image</label>
+              <img id="currentImage" src="" alt="Product Image" style="max-width:150px;">
+            </div>
+
+            <!-- Upload New Image -->
+            <div>
+              <label for="image" >Upload New Image (optional)</label>
+              <input type="file"  name="image" id="image" accept="image/*" onchange="previewImage(event)">
+              <img id="preview" src="" alt="Preview"  style="max-width:150px; display: none;">
+            </div>
+
+            <!-- Catalogues -->
+            <div>
+              <label>Catalogues</label>
+              <div id="catalogueContainer" ></div>
+              <button type="button" class="btn btn-outline-primary btn-sm" onclick="generateModelSelector()">+ Add Catalogue</button>
+            </div>
+
+            <!-- Colors -->
+            <div>
+              <label>Colors</label>
+              <div id="colorContainer"></div>
+              <button type="button" onclick="addColorInput()">+ Add Color</button>
+            </div>
+
+            <!-- Stock Status -->
+            <div>
+              <label>Stock Status</label>
+              <select name="stockStatus" id="stockStatus" required>
+                <option value="In Stock">In Stock</option>
+                <option value="Out of Stock">Out of Stock</option>
+              </select>
+            </div>
+
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">Update Product</button>
+            </div>
+          </form>
+  </div>
+
+<script src="./js/edit-product.js"></script>
+
+</script>
+
+<script src="./js/script.js">
+
+</script>
+
+
+
+</body>
+</html>

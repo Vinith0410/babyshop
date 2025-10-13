@@ -1,0 +1,106 @@
+/* Product Card Grid: 4 per row on desktop */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin: 2rem 0;
+}
+
+/* Product Card: smaller, compact */
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.10);
+  padding: 0.6rem 0.5rem 0.7rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.15s;
+  position: relative;
+  min-width: 0;
+}
+
+.product-card:hover {
+  box-shadow: 0 6px 18px rgba(44, 62, 80, 0.16);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.product-card img {
+  width: 170px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 7px;
+  margin-bottom: 0.6rem;
+  background: #f7fafc;
+  border: 1.2px solid #e0e0e0;
+}
+
+.product-card h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 0.18rem;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.product-card p {
+  font-size: 0.88rem;
+  color: #444;
+  margin-bottom: 0.1rem;
+  text-align: center;
+  min-height: 28px;
+}
+.product-card div{
+  margin-bottom: 0.2rem;
+}
+
+.product-card .card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+.product-card .btn {
+  padding: 0.25rem 0.6rem;
+  background: linear-gradient(90deg, #43a047 60%, #388e3c 100%);
+  color: #fff;
+  font-size: 0.93rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+}
+.product-card .btn:hover {
+  background: linear-gradient(90deg, #388e3c 60%, #43a047 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+@media (max-width: 1200px){
+  .product-grid {
+      grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Responsive: 2 per row on tablets, 1 per row on mobile */
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .product-card{
+    margin: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  .product-card {
+    padding: 0.7rem 0.3rem 0.9rem 0.3rem;
+    margin: 10px;
+  }
+}

@@ -1,0 +1,76 @@
+.table-container {
+  width: 95%;
+  margin: 0 auto 40px auto;
+  overflow-x: auto;               /* 👈 enables scroll */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on mobile */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background: #fff;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;  /* 👈 force scroll if screen < 700px */
+}
+
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  font-size: 14px;
+  white-space: nowrap; /* 👈 prevent breaking into multiple lines */
+}
+
+th {
+  background: #1e88e5;
+  color: #fff;
+  font-size: 15px;
+}
+
+
+/* Buttons */
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: transform 0.2s, opacity 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.edit-btn {
+  background: #2e7d32;
+  color: #fff;
+}
+
+.delete-btn {
+  background: #d32f2f;
+  color: #fff;
+}
+
+.model-btn {
+  background: #0288d1;
+  color: #fff;
+  font-size: 11px;
+  margin-left: 5px;
+}
+
+/* Optional: Custom scrollbar for nicer UI */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+.table-container::-webkit-scrollbar-thumb {
+  background: #1e88e5;
+  border-radius: 4px;
+}
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}

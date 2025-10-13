@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Orders</title>
+  <link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/order.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <h2 class="logo">Admin Panel</h2>
+    <label for="menu-checkbox" class="menu-toggle">&#9776;</label>
+    <ul class="nav-links">
+      <li><a href="/admin/add-product">Add Product</a></li>
+      <li><a href="/admin/add-catalogues">Add-Catalogues</a></li>
+      <li><a href="/admin/view-product">List Products</a></li>
+      <li><a href="/admin/edit-catalogues">List Catalogues</a></li>
+      <li><a href="/admin/orders">Order Product</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </nav>
+  <h1>📦 All Orders</h1>
+
+  <button onclick="downloadExcel()" class="btn-download">Download</button>
+
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Enter Product ID">
+    <button onclick="searchOrder()">Search</button>
+    <button onclick="showAllOrders()">Show All Orders</button>
+  </div>
+
+  <div class="table-container">
+    <table id="ordersTable">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Product ID</th>
+          <th>Customer Details</th>
+          <th>Delivery Address</th>
+          <th>Product Details</th>
+          <th>Status</th>
+          <th>Delivery Estimate</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="pagination" id="pagination"></div>
+
+  <script src="./js/order.js">
+  </script>
+
+  <script src="./js/script.js">
+
+  </script>
+</body>
+</html>

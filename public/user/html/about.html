@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Allwin Baby Shop HOME</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="./css/navbar.css">
+<link rel="stylesheet" href="./css/about.css">
+<link rel="stylesheet" href="./css/footer.css">
+<link rel="stylesheet" href="./css/perloader.css">
+</head>
+<body>
+<!-- Preloader (always first) -->
+<div id="preloader" class="preloader">
+  <div class="spinner"></div>
+</div>
+
+<main id="main-content" style="display:none;">
+<!-- Top Navbar -->
+<div class="top-nav">
+  <button id="orderbtn"><i class="fas fa-receipt"></i> Order</button>
+  <button id="cartBtn">
+    <i class="fas fa-shopping-cart"></i> Cart
+    <span id="cartCount" class="cart-count"></span>
+  </button>
+</div>
+
+<!-- Main Navbar -->
+<div class="main-nav">
+  <div class="logo-section">
+    <img src="./image/logo.jpg" alt="Logo">
+    <div class="shop-text">
+      <h5>Allwin Baby Shop</h5>
+      <small>Happy Toys Happy Kids</small>
+    </div>
+  </div>
+
+  <!-- Hamburger / Close Icon -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/user/home">Home</a>
+    <a href="/user/about" class="active">About</a>
+    <a href="/user/shop">Shop</a>
+    <a href="/user/mall">Fun Mall</a>
+    <a href="/user/contact">Contact</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+<!--About Page -->
+
+<!-- Top Section -->
+  <section class="hero">
+    <h1>About Allwin Baby Shop</h1>
+    <p>Bringing joy to children worldwide with premium quality toys that spark imagination, creativity, and endless hours of fun and learning.</p>
+  </section>
+
+  <section class="story">
+  <div class="story-left">
+    <h2>Our Story</h2>
+      <p>Allwin Baby Shop has been a trusted name for parents since 2012. Our journey started with a vision to provide quality toys that not only entertain but also contribute to child development.</p>
+      <p>From a humble beginning to opening branches, we’ve always believed in care, love, and creativity as the heart of our brand ❤️.</p>
+    </div>
+    <div class="story-right">
+      <iframe src="https://www.youtube.com/embed/2m2Z8IzDt6s?si=Ft8T0nc6fq0d6fmN" title="YouTube video"></iframe>
+    </div>
+  </section>
+
+      <div class="tree">
+      <ul>
+        <li>
+          <span>🌳 Proprietor: SASIKUMAR</span>
+          <ul>
+            <li>
+              <span>🏪 Shop Open in 2012</span>
+              <ul>
+                <li>
+                  <span>🏢 Establishment in Funmall in 2019</span>
+                  <ul>
+                    <li><span>🌍 Branch Open in Mohanur in 2022</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mission -->
+  <section class="mission">
+    <h2>Our Mission & Values</h2>
+    <p>We believe in creating not just customers, but lasting memories and developmental milestones for children across the globe.</p>
+      <div class="card">
+        <div class="mission-card">
+          <img src="./image/shop/aboutpage/achievement.png" alt="">
+          <h3>Quality First</h3>
+          <p>Every toy meets international safety standards and undergoes rigorous quality testing before reaching your child.</p>
+        </div>
+        <div class="mission-card">
+          <img src="./image/shop/aboutpage/evolution.png" alt="">
+          <h3>Child Development</h3>
+          <p>We collaborate with child psychologists and educators to ensure our toys support healthy development and learning.</p>
+        </div>
+        <div class="mission-card">
+          <img src="./image/shop/aboutpage/happy-face.png" alt="">
+          <h3>Customer Happiness</h3>
+          <p>Your child’s smile is our success. We go above and beyond to ensure every purchase brings joy and satisfaction.</p>
+        </div>
+      </div>
+  </section>
+
+
+  <!-- Why Choose Us -->
+  <section class="mission">
+    <h2>Why Choose Allwin Baby Shop?</h2>
+    <p>We’re more than just a toy store – we’re your partners in creating beautiful childhood memories.</p>
+
+    <div class="values">
+      <div class="value-box">
+        <div class="icon-circle">
+             <i class="fas fa-shipping-fast"></i>
+        </div>
+        <h3>Fast Shipping</h3>
+        <p>Get your orders delivered quickly and securely, right to your doorstep.</p>
+      </div>
+      <div class="value-box">
+        <div class="icon-circle">
+              <i class="fas fa-shield-alt"></i>
+
+        </div>
+        <h3>Safety Guaranteed</h3>
+        <p>All toys are tested for safety and made from non-toxic, child-safe materials.</p>
+      </div>
+      <div class="value-box">
+        <div class="icon-circle">
+              <i class="fas fa-gift"></i>
+        </div>
+        <h3>Beautiful Packaging</h3>
+        <p>Every order comes with complimentary gift wrapping perfect for any occasion.</p>
+      </div>
+      <div class="value-box">
+        <div class="icon-circle">
+        <i class="fas fa-globe"></i>
+        </div>
+        <h3>Premium Quality</h3>
+        <p>Curated selection of toys from trusted brands worldwide with quality assurance.</p>
+      </div>
+      <div class="value-box">
+        <div class="icon-circle">
+          <div class="feature-icon">
+        <i class="fas fa-headset"></i>
+      </div>
+        </div>
+        <h3>24/7 Support</h3>
+        <p>Friendly customer support team ready to help you with any questions or concerns.</p>
+      </div>
+      <div class="value-box">
+  <div class="icon-circle">
+    <i class="fas fa-hand-holding-heart"></i>
+  </div>
+  <h3>Care & Love</h3>
+  <p>Every product is chosen with love to make your child’s moments special.</p>
+</div>
+
+<div class="value-box">
+  <div class="icon-circle">
+    <i class="fas fa-smile"></i>
+  </div>
+  <h3>Customer Satisfaction</h3>
+  <p>We go the extra mile to ensure every purchase leaves you smiling.</p>
+</div>
+<div class="value-box">
+  <div class="icon-circle">
+    <i class="fas fa-star"></i>
+  </div>
+  <h3>Trusted by Parents</h3>
+  <p>Loved by thousands of families for safe and quality toys.</p>
+</div>
+<div class="value-box">
+  <div class="icon-circle">
+    <i class="fas fa-lock"></i>
+  </div>
+  <h3>Secure Payments</h3>
+  <p>Shop with confidence using our safe and encrypted payment options.</p>
+</div>
+
+    </div>
+  </section>
+
+
+  <!-- Gallery -->
+  <section class="gallery">
+    <h2>Meet Our Shop</h2>
+    <div class="gallery-container">
+      <div class="gallery-item">
+        <img src="./image/shop/image-4.jpg" alt="Shop 1">
+        <div class="gallery-text">Our Shop Entrance</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/shop-1.jpg" alt="Shop 2">
+        <div class="gallery-text">Product Side View — Display Racks</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/shop-5.jpg" alt="Shop 3">
+        <div class="gallery-text">Wide Range of Toys</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/shop-7.jpg" alt="Shop 4">
+        <div class="gallery-text">Front View Inside Our Shop</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/shop-8.jpg" alt="Shop 5">
+        <div class="gallery-text">Inner Area of Our Shop</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/shop-9.jpg" alt="Shop 6">
+        <div class="gallery-text"> Bicycle Collection For Baby's & Kids</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/shop-10.jpg" alt="Shop 6">
+        <div class="gallery-text">Bike for Kids</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/baby-1.jpg" alt="Shop 6">
+        <div class="gallery-text">Baby Products Sections</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/baby-2.jpg" alt="Shop 6">
+        <div class="gallery-text">More Baby Product Varieties</div>
+      </div>
+      <div class="gallery-item">
+        <img src="./image/shop/shop/baby-3.jpg" alt="Shop 6">
+        <div class="gallery-text">Baby Toys Collection</div>
+      </div>
+    </div>
+  </section>
+
+    <section class="funmall-section">
+    <h2>Fun Mall</h2>
+    <p>
+      Welcome to our Fun Mall — a joyful world designed especially for babies and kids!
+      From playful toys to interactive games, our mall is filled with exciting experiences
+      that bring happiness, laughter, and creativity to little ones.
+      A place where fun never ends!
+    </p>
+
+    <div class="funmall-images">
+      <img src="./image/shop/image-3.jpg" alt="Fun Mall Image">
+      <img src="./image/shop/image-6.jpg" alt="Fun Mall Image">
+      <img src="./image/shop/image-7.jpg" alt="Fun Mall Image">
+      <img src="./image/shop/shop/game-1.jpg" alt="Fun Mall Image">
+      <img src="./image/shop/shop/game-2.jpg" alt="Fun Mall Image">
+      <img src="./image/shop/shop/game-5.jpg" alt="Fun Mall Image">
+      <img src="./image/shop/shop/game-4.jpg" alt="Fun Mall Image">
+      <img src="./image/shop/shop/game-6.jpg" alt="Fun Mall Image">
+      <img src="./image/shop/shop/game-7.jpg" alt="Fun Mall Image">
+    </div>
+
+    <a href="/user/mall" class="view-more">View More →</a>
+  </section>
+
+
+  <section class="magic-section">
+    <div class="magic-card">
+      <h2>✨ Ready to Create Magic?</h2>
+      <p>Join thousands of happy families who trust us to bring smiles to their children's faces.</p>
+      <button class="magic-btn"> <a href="/user/shop"> Start Shopping </a></button>
+    </div>
+  </section>
+
+<!-- footer content -->
+
+<footer class="footer">
+    <div class="footer-container">
+
+      <!-- Logo & About -->
+      <div class="footer-logo">
+        <img src="./logo" alt="">
+        <h2>Allwin Baby Shop</h2>
+        <span>Happy Toys, Happy Kids</span>
+        <p>Your trusted partner for quality toys that spark imagination and create joyful memories for children of all ages.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/user/about">About Us</a></li>
+          <li><a href="/user/contact">Contact Us</a></li>
+          <li><a href="/user/contact">FAQs</a></li>
+          <li><a href="/user/shop">Shop</a></li>
+          <li><a href="/user/mall">Fun Mall</a></li>
+          <li><a href="/user/contact">Shipping Info</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div class="footer-categories">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/user/shop">Soft Toys</a></li>
+          <li><a href="/user/shop">Educational Toys</a></li>
+          <li><a href="/user/shop">Action Figures</a></li>
+          <li><a href="/user/shop">Outdoor Toys</a></li>
+          <li><a href="/user/shop">Dolls</a></li>
+          <li><a href="/user/shop">Musical Toys</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i>Allwin Baby Shop, High School Road, Thirkadai Building, Paramathi Velur, Namakkal - 638182</p>
+        <p><i class="fas fa-phone"></i>+91 99943 85838</p>
+        <p><i class="fas fa-envelope"></i>allwinbabyshop@gmail.com</p>
+
+        <div class="store-hours">
+          <strong>Store Hours</strong><br>
+          Everyday: 09:30 AM - 9:00 PM<br>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      © 2025 Allwin Baby Shop. All rights reserved. Made with <span>❤</span> for kids.
+    </div>
+  </footer>
+</main>
+
+<script src="./js/script.js"></script>
+<script src="./js/cart-number.js"></script>
+<script src="./js/perloader.js"></script>
+<!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

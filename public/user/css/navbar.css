@@ -1,0 +1,170 @@
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+  line-height: 1.6;
+  text-transform: capitalize;
+}
+
+/* Top small navbar */
+  .top-nav {
+    background-color: #ff69b4;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+
+  .top-nav button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 6px 14px;
+    gap: 5px;
+    transition: transform 0.2s ease;
+  }
+
+  .top-nav button:hover {
+    transform: scale(1.1);
+  }
+
+  /* Main navbar */
+  .main-nav {
+    background: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-section img {
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .shop-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .shop-text h5 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff69b4;
+  }
+
+  .shop-text small {
+    color: #888;
+    font-size: 0.85rem;
+  }
+
+  /* Nav links */
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    background-color: #ff69b4;
+    color: white;
+  }
+  .nav-links .active{
+    background-color: #ff69b4;
+    color: white;
+  }
+  /* Hamburger icon */
+  .hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+  }
+  .cart-count {
+    display: none;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 7px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .email{
+    text-transform: lowercase !important;
+  }
+
+    @media (max-width: 992px){
+      .logo-section img{
+        height: 40px;
+      }
+      .shop-text h5{
+        font-size: 1rem;
+      }
+      .shop-text small{
+        font-size: 0.7rem;
+      }
+      .nav-links a{
+        font-size: 0.9rem;
+      }
+    }
+
+  /* Mobile menu */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      z-index: 100;
+      top: 100%;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      width: 200px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .nav-links.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .hamburger {
+      display: block;
+    }
+  }
+
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

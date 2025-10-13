@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Allwin Baby Shop HOME</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="./css/navbar.css">
+<link rel="stylesheet" href="./css/contact.css">
+<link rel="stylesheet" href="./css/footer.css">
+<link rel="stylesheet" href="./css/perloader.css">
+</head>
+
+
+  <!-- Preloader (always first) -->
+<div id="preloader" class="preloader">
+  <div class="spinner"></div>
+</div>
+<main id="main-content" style="display:none;">
+<!-- Top Navbar -->
+<div class="top-nav">
+  <button id="orderbtn"><i class="fas fa-receipt"></i> Order</button>
+  <button id="cartBtn">
+    <i class="fas fa-shopping-cart"></i> Cart
+    <span id="cartCount" class="cart-count"></span>
+  </button>
+</div>
+
+<!-- Main Navbar -->
+<div class="main-nav">
+  <div class="logo-section">
+    <img src="./image/logo.jpg" alt="Logo">
+    <div class="shop-text">
+      <h5>Allwin Baby Shop</h5>
+      <small>Happy Toys Happy Kids</small>
+    </div>
+  </div>
+
+  <!-- Hamburger / Close Icon -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/user/home">Home</a>
+    <a href="/user/about">About</a>
+    <a href="/user/shop">Shop</a>
+    <a href="/user/mall">Fun Mall</a>
+    <a href="/user/contact" class="active">Contact</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+<!-- Hero -->
+  <section class="hero">
+    <h1>Contact US</h1>
+    <p>We are always here to help you with your queries!</p>
+  </section>
+
+  <!-- Contact Info + Map -->
+  <section class="contact-container">
+    <div class="contact-info">
+     <h2>📍 Visit Us</h2>
+      <p>Allwin Baby Shop, High School Road, Thirkadai Building, Paramathi Velur, Namakkal - 638182</p>
+      <p>☎ <strong>+91 99943 85838</strong></p>
+      <p class="email">📧 <strong>allwinbabyshop@gmail.com</strong></p>
+      <p>🕒 Everyday: 09:30 AM - 9:00 PM</p>
+      <p>💬 Our dedicated team is always ready to help you!</p>
+    </div>
+    <div class="map">
+      <h2>Find Us</h2>
+     <iframe src="https://www.google.com/maps/embed?pb=!4v1759423122338!6m8!1m7!1s0bPG1CJ6kjpkCB-rgSXwwA!2m2!1d11.10996036262692!2d78.00783524446774!3f333.8385365997473!4f11.699146318583843!5f0.5606988378453902"
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+<!-- Team Contact -->
+<section class="contact-section">
+  <h2>📞 Get in Touch with Fun Mall</h2>
+  <p class="intro-text">Our Fun Mall team is always here to assist you. Choose the right department below to connect with us.</p>
+
+  <div class="contact-grid">
+    <!-- Store Enquiries -->
+    <div class="card">
+      <h3>📦 Store Enquiries</h3>
+      <p>Looking for a shop or brand inside Fun Mall?</p>
+      <p><strong>📞 Phone:</strong> +91 9994385838</p>
+      <p class="email"><strong>📧 Email:</strong> allwinbabyshop@gmail.com </p>
+      <p><strong>🕒 Hours:</strong> Everyday: 09:30 AM - 9:00 PM</p>
+    </div>
+
+    <!-- Delivery Support -->
+    <div class="card">
+      <h3>🚚 Delivery Support</h3>
+      <p>Need help with your Fun Mall orders or delivery tracking?</p>
+      <p><strong>📞 Phone:</strong> +91 7502023222</p>
+      <p class="email"><strong>📧 Email:</strong> allwinbabyshop@gmail.com</p>
+      <p><strong>🕒 Hours:</strong> Everyday: 09:30 AM - 9:00 PM</p>
+    </div>
+
+    <!-- General Queries -->
+    <div class="card">
+      <h3>💬 Fun Mall Queries</h3>
+      <p>Questions about events, offers, or mall facilities?</p>
+      <p><strong>📞 Phone:</strong> +91 7502024222</p>
+      <p class="email"><strong>📧 Email:</strong> bsasikumar1982@gmail.com</p>
+      <p><strong>🕒 Hours:</strong> Everyday: 09:30 AM - 9:00 PM</p>
+    </div>
+
+    <!-- Customer Care -->
+    <div class="card">
+      <h3>👩‍💼 Customer Care</h3>
+      <p>Our support team is ready to assist you anytime!</p>
+      <p><strong>📞 Phone:</strong> +91 9994385838</p>
+      <p class="email"><strong>📧 Email:</strong> allwinbabyshop@gmail.com </p>
+      <p><strong>🕒 Hours:</strong> Everyday: 09:30 AM - 9:00 PM</p>
+    </div>
+  </div>
+</section>
+
+ <!-- FAQ -->
+<section class="faq">
+  <h2>Frequently Asked Questions</h2>
+  <details>
+    <summary>What are the mall opening hours?</summary>
+    <p>We are open daily from 10 AM to 10 PM.</p>
+  </details>
+  <details>
+    <summary>Do you provide home delivery?</summary>
+    <p>Yes! Delivery is available for selected stores inside Fun Mall.</p>
+  </details>
+  <details>
+    <summary>Is parking available?</summary>
+    <p>Yes, we have ample parking space for cars and bikes.</p>
+  </details>
+  <details>
+    <summary>Do you have a kids' play area?</summary>
+    <p>Yes, we have a safe and fun kids' play zone with games and activities.</p>
+  </details>
+  <details>
+    <summary>Are there wheelchair facilities?</summary>
+    <p>Yes, we provide wheelchair access and ramps throughout the mall.</p>
+  </details>
+  <details>
+    <summary>Do you host live events?</summary>
+    <p>Every weekend, we host live shows, music events, and cultural programs.</p>
+  </details>
+  <details>
+    <summary>Can I book event space at Fun Mall?</summary>
+    <p>Yes, our event hall can be booked for private or corporate events. Contact our events team for details.</p>
+  </details>
+  <details>
+    <summary>What payment methods do you accept?</summary>
+    <p>All major debit/credit cards, UPI, wallets, and cash payments are accepted.</p>
+  </details>
+  <details>
+    <summary>Do you offer gift cards?</summary>
+    <p>Yes, Fun Mall gift cards are available at the customer care desk.</p>
+  </details>
+  <details>
+    <summary>Are pets allowed inside the mall?</summary>
+    <p>Pets are not allowed inside, except for certified service animals.</p>
+  </details>
+</section>
+
+<!-- footer content -->
+
+<footer class="footer">
+    <div class="footer-container">
+
+      <!-- Logo & About -->
+      <div class="footer-logo">
+        <img src="./logo" alt="">
+        <h2>Allwin Baby Shop</h2>
+        <span>Happy Toys, Happy Kids</span>
+        <p>Your trusted partner for quality toys that spark imagination and create joyful memories for children of all ages.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/user/about">About Us</a></li>
+          <li><a href="/user/contact">Contact Us</a></li>
+          <li><a href="/user/contact">FAQs</a></li>
+          <li><a href="/user/shop">Shop</a></li>
+          <li><a href="/user/mall">Fun Mall</a></li>
+          <li><a href="/user/contact">Shipping Info</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div class="footer-categories">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/user/shop">Soft Toys</a></li>
+          <li><a href="/user/shop">Educational Toys</a></li>
+          <li><a href="/user/shop">Action Figures</a></li>
+          <li><a href="/user/shop">Outdoor Toys</a></li>
+          <li><a href="/user/shop">Dolls</a></li>
+          <li><a href="/user/shop">Musical Toys</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i>Allwin Baby Shop, High School Road, Thirkadai Building, Paramathi Velur, Namakkal - 638182</p>
+        <p><i class="fas fa-phone"></i>+91 99943 85838</p>
+        <p><i class="fas fa-envelope"></i>allwinbabyshop@gmail.com</p>
+
+        <div class="store-hours">
+          <strong>Store Hours</strong><br>
+          Everyday: 09:30 AM - 9:00 PM<br>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      © 2025 Allwin Baby Shop. All rights reserved. Made with <span>❤</span> for kids.
+    </div>
+  </footer>
+</main>
+<script src="./js/script.js"></script>
+<script src="./js/cart-number.js"></script>
+<script src="./js/perloader.js"></script>
+<!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

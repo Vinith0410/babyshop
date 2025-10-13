@@ -1,0 +1,417 @@
+/* ========== Headings ========== */
+#order-heading {
+  text-align: center;
+  color: #ff69b4;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  position: relative;
+}
+
+#order-heading::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff69b4, #ff1493);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 3px;
+}
+
+#addressHeading {
+  margin-top: 30px;
+  text-align: center;
+  color: #ff69b4;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* ========== Table Styles ========== */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  /* ✅ horizontal scroll only */
+  margin: 15px 0;
+  text-transform: capitalize;
+}
+
+/* Scrollbar under the table */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #ff69b4;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #ffe4ef;
+}
+
+#orderTable {
+  border-collapse: collapse;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#orderTable th,
+#orderTable td {
+  border: 1px solid #ffd6e6;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+#orderTable th {
+  background: linear-gradient(90deg, #ff69b4, #ff1493);
+  color: #fff;
+  font-weight: bold;
+}
+
+#orderTable tr:hover {
+  background: #ffe4ef;
+}
+
+#orderTable img {
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== Totals ========== */
+#orderSummary {
+  margin: 25px auto;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff9ac4, #ff69b4);
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ========== Delivery Form ========== */
+#deliveryForm {
+  max-width: 520px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#deliveryForm input,
+#deliveryForm textarea {
+  width: 95%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ffc5dc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#deliveryForm input:focus,
+#deliveryForm textarea:focus {
+  border-color: #ff69b4;
+  box-shadow: 0 0 6px rgba(255, 105, 180, 0.4);
+}
+
+/* Payment  */
+.payment-options {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 15px 0;
+  flex-wrap: nowrap; /* force buttons to stay in one line */
+}
+
+.pay-btn-method {
+  background-color: #fff;
+  color: #6a0dad;
+  border: 2px solid #6a0dad;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  flex: 1; /* make buttons evenly spaced */
+  text-align: center;
+}
+
+.pay-btn-method:hover {
+  background-color: #f3e9ff;
+}
+
+.pay-btn-method.active {
+  background-color: #6a0dad;
+  color: white;
+  box-shadow: 0 0 10px rgba(106, 13, 173, 0.4);
+}
+
+.payment-section {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff;
+  margin-top: 10px;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/* ========== Button ========== */
+#deliveryForm button {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, #ff69b4, #ff1493);
+  color: white;
+  border: none;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#deliveryForm button:hover {
+  background: linear-gradient(90deg, #ff1493, #ff69b4);
+  transform: scale(1.03);
+}
+
+/* display orders  */
+/* ========== Order Card ========== */
+.order-card {
+  border: 1px solid #ffc5dc;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.order-id {
+  color: #ff1493;
+}
+
+.order-card b {
+  display: inline-block;
+  font-weight: bold;
+  color: #ff69b4;
+  animation: blinkAnim 2.5s infinite;
+}
+
+.no-orders{
+  text-align: center;
+  font-size: 20px;
+  color: #777;
+  margin: 20px;
+}
+.shop-now-btn {
+  text-align: center;
+  text-decoration: none;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+@keyframes blinkAnim {
+
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+    color: #ff69b4;
+  }
+
+  25%,
+  75% {
+    opacity: 0.4;
+    color: #ff1493;
+  }
+}
+
+.payment-screenshot {
+  width: 200px;
+  height: auto;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.no-payment {
+  color: red;
+  font-style: italic;
+  margin-top: 5px;
+}
+
+
+/* ========== Responsive ========== */
+
+/* 📱 Small screens (mobile <600px) */
+@media (max-width: 600px) {
+  #order-heading {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  #addressHeading {
+    font-size: 18px;
+  }
+
+  /* ✅ Force scroll on small screens */
+  #orderTable {
+    min-width: 600px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  #orderTable th,
+  #orderTable td {
+    padding: 8px;
+  }
+
+  #orderSummary {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  #deliveryForm {
+    width: 95%;
+    padding: 12px;
+  }
+
+  #deliveryForm input,
+  #deliveryForm textarea {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  #deliveryForm button {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+/* 📟 Medium screens (tablets 600px–1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  #order-heading {
+    font-size: 24px;
+  }
+
+  #addressHeading {
+    font-size: 20px;
+  }
+
+  #orderTable {
+    font-size: 13px;
+  }
+
+  #orderTable th,
+  #orderTable td {
+    padding: 10px;
+  }
+
+  #orderSummary {
+    font-size: 14px;
+  }
+
+  #deliveryForm {
+    width: 90%;
+    padding: 18px;
+  }
+
+  #deliveryForm input,
+  #deliveryForm textarea {
+    font-size: 14px;
+    padding: 11px;
+  }
+
+  #deliveryForm button {
+    font-size: 15px;
+    padding: 13px;
+  }
+}
+
+/* 🖥️ Large screens (desktop >1024px) */
+@media (min-width: 1025px) {
+  #order-heading {
+    font-size: 28px;
+  }
+
+  #orderTable {
+    font-size: 14px;
+  }
+
+  #deliveryForm {
+    max-width: 520px;
+  }
+}
+
+/* 📱 Extra Small screens (mobile <480px) */
+@media (max-width: 480px) {
+  #order-heading {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  #addressHeading {
+    font-size: 16px;
+  }
+
+  /* ✅ Cart/Table fixes */
+  .table-container {
+    overflow-x: auto;
+    margin-bottom: 12px;
+  }
+
+  #orderTable {
+    min-width: 650px;
+    /* force horizontal scroll */
+    font-size: 11px;
+    /* smaller text for better fit */
+  }
+
+  #orderTable th,
+  #orderTable td {
+    padding: 6px;
+  }
+
+  #orderSummary {
+    font-size: 12px;
+    padding: 8px;
+    margin-top: 15px;
+  }
+
+  #deliveryForm {
+    width: 95%;
+    padding: 10px;
+  }
+
+  #deliveryForm input,
+  #deliveryForm textarea {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  #deliveryForm button {
+    font-size: 13px;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,377 @@
+    html,body{
+       overflow-x: hidden;
+      max-width: 100%;
+    }
+.cart-heading {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 28px;
+  color: #2c3e50;
+}
+
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease-in-out;
+  text-transform: capitalize;
+}
+
+th,
+td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  font-size: 15px;
+  color: #333;
+}
+
+th {
+  background: #ff4081;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.cart-product-image {
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.cart-product-image:hover {
+  transform: scale(1.1);
+}
+
+.qty-btn {
+  padding: 6px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  background: #ff4081;
+  color: #fff;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.qty-btn:hover {
+  background: #ff4081;
+  transform: scale(1.05);
+}
+
+.delete-btn {
+  background: #e74c3c;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+.empty {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-size: 20px;
+  color: #777;
+  animation: fadeIn 1s;
+}
+
+#cartSummary {
+  width: 90%;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: right;
+  font-size: 16px;
+  animation: slideUp 0.6s ease-in-out;
+}
+
+#cartSummary span {
+  margin-right: 30px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#orderBtn {
+  padding: 10px 30px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+  transition: all 0.4s ease;
+}
+
+#orderBtn:hover {
+  background: #1b5e20;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(27, 94, 32, 0.4);
+}
+
+.product-color {
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #5a2a3f;
+  /* dark pink text */
+  background-color: #fff;
+  border: 1px solid #f8a5c2;
+  /* light pink border */
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+/* Hover effect for select box */
+.product-color:hover {
+  border-color: #ff69b4;
+}
+
+/* Focus effect */
+.product-color:focus {
+  border-color: #ff69b4;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(255, 105, 180, 0.35);
+}
+
+/* Dropdown options styling */
+.product-color option {
+  padding: 6px 10px;
+  background-color: #fff;
+  color: #5a2a3f;
+  transition: background 0.2s ease;
+}
+
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 1024px) {
+  table {
+    width: 95%;
+  }
+
+  th,
+  td {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  img {
+    width: 70px;
+  }
+}
+
+@media (max-width: 992px) {
+  .cart-heading {
+    font-size: 24px;
+  }
+
+  table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  img {
+    width: 65px;
+  }
+
+  .qty-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .product-color {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  #orderBtn {
+    font-size: 16px;
+    padding: 8px 20px;
+  }
+
+  #cartSummary {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  #cartSummary span {
+    display: block;
+    margin: 8px 0;
+  }
+}
+
+
+@media (max-width: 710px) {
+  table {
+    display: flex;
+    /* make table act like grid container */
+    flex-wrap: wrap;
+    /* allow wrapping */
+    gap: 15px;
+    /* spacing between cards */
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+    /* center cards */
+  }
+
+  tr {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    /* card width ~250px, responsive */
+    max-width: 250px;
+    /* prevent cards from being too wide */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 12px;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  td {
+    text-align: left;
+    padding: 8px;
+    border: none;
+    font-size: 14px;
+  }
+
+  /* Labels */
+  td:nth-child(1)::before {
+    content: "Product: ";
+    font-weight: bold;
+    color: #ff4081;
+    display: block;
+  }
+
+  td:nth-child(2)::before {
+    content: "Name: ";
+    font-weight: bold;
+    color: #ff4081;
+    display: block;
+  }
+
+  td:nth-child(3)::before {
+    content: "Price: ";
+    font-weight: bold;
+    color: #ff4081;
+    display: block;
+  }
+
+  td:nth-child(4)::before {
+    content: "Discount: ";
+    font-weight: bold;
+    color: #ff4081;
+    display: block;
+  }
+
+  td:nth-child(5)::before {
+    content: "Color: ";
+    font-weight: bold;
+    color: #ff4081;
+    display: block;
+  }
+
+  td:nth-child(6)::before {
+    content: "Quantity: ";
+    font-weight: bold;
+    color: #ff4081;
+    display: block;
+    margin: 5px 0;
+  }
+
+  td:nth-child(7)::before {
+    content: "SubTotal: ";
+    font-weight: bold;
+    color: #ff4081;
+    display: block;
+  }
+
+  /* Adjust product image */
+  .cart-product-image {
+    width: 100%;
+    max-width: 150px;
+    margin: 0 auto 10px;
+    display: block;
+  }
+
+  .qty-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .product-color {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  #orderBtn {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  #cartSummary {
+    text-align: center;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 600px) {
+  tr {
+    max-width: 500px;
+  }
+}

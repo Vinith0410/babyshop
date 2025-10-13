@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Summary</title>
+  <link rel="stylesheet" href="./css/order.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="./css/perloader.css">
+</head>
+<body>
+
+
+  <!-- perloader -->
+   <div id="preloader" class="preloader">
+  <div class="spinner"></div>
+</div>
+
+<main  id="main-content" style="display:none;">
+  <!-- Top Navbar -->
+<div class="top-nav">
+  <button id="orderbtn"><i class="fas fa-receipt"></i> Order</button>
+  <button id="cartBtn">
+    <i class="fas fa-shopping-cart"></i> Cart
+    <span id="cartCount" class="cart-count"></span>
+  </button>
+</div>
+
+<!-- Main Navbar -->
+<div class="main-nav">
+  <div class="logo-section">
+    <img src="./image/logo.jpg" alt="Logo">
+    <div class="shop-text">
+      <h5>Allwin Baby Shop</h5>
+      <small>Happy Toys Happy Kids</small>
+    </div>
+  </div>
+
+  <!-- Hamburger / Close Icon -->
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/user/home">Home</a>
+    <a href="/user/about">About</a>
+    <a href="/user/shop" class="active">Shop</a>
+    <a href="/user/mall">Fun Mall</a>
+    <a href="/user/contact">Contact</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+<h2 class="order-heading" id="order-heading" style="display:none;">Order Summary 🧾</h2>
+
+<!-- Product Summary Table -->
+<div class="table-container">
+  <table id="orderTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Color</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody id="orderBody"></tbody>
+  </table>
+</div>
+
+<!-- Totals -->
+<div id="orderSummary" style="display:none;">
+  <span id="productCount">Products: 0</span> |
+  <span id="totalQty">Total Quantity: 0</span> |
+  <span id="totalPrice">Total Price: ₹0.00</span>
+</div>
+
+<!-- Delivery Address Form -->
+<h3 id="addressHeading" style="display:none;">Delivery Address</h3>
+<form id="deliveryForm" style="display:none;">
+  <input type="text" name="fullname" placeholder="Full Name" required><br>
+  <input type="email" name="email" placeholder="Email" required><br>
+  <input type="tel" name="mobile" placeholder="Mobile Number" required><br>
+  <textarea name="address" placeholder="Address" required></textarea><br>
+  <input type="text" name="building" placeholder="Building / Flat No." required><br>
+  <input type="text" name="city" placeholder="City" required><br>
+  <input type="text" name="state" placeholder="State" required><br>
+  <input type="text" name="pincode" placeholder="Pincode" required><br>
+<h3>Choose Payment Method</h3>
+
+<div class="payment-options">
+  <button type="button" class="pay-btn-method" onclick="showPayment('account', this)">💳 Account Pay</button>
+  <button type="button" class="pay-btn-method" onclick="showPayment('scan', this)">📷 Scan & Pay</button>
+  <button type="button" class="pay-btn-method" onclick="showPayment('upi', this)">💰 UPI ID Pay</button>
+</div>
+
+<!-- Account Details -->
+<div id="accountDetails" class="payment-section">
+  <h4>Bank Account Details</h4>
+  <p><b>Account Name:</b> Allwin Baby Shop</p>
+  <p><b>Account Number:</b> 123456789012</p>
+  <p><b>IFSC Code:</b> SBIN0001234</p>
+  <p><b>Bank Name:</b> State Bank of India</p>
+</div>
+
+<!-- QR Scan -->
+<div id="scanDetails" class="payment-section" style="display:none;">
+  <h4>Scan & Pay</h4>
+  <img src="./image/qr.jpeg" alt="QR Code" width="200">
+</div>
+
+<!-- UPI ID -->
+<div id="upiDetails" class="payment-section" style="display:none;">
+  <h4>Pay using UPI ID</h4>
+  <p><b>UPI ID:</b> allwinbabyshop@oksbi</p>
+</div>
+
+<label for="paymentProof">Upload Payment Screenshot:</label>
+<input type="file" id="paymentProof" name="paymentProof" accept="image/*" required>
+<br>
+<img id="previewImg" src="" style="display:none; width:150px; margin-top:10px;" />
+  <button type="submit">Confirm Order</button>
+</form>
+
+<!-- footer content -->
+
+<footer class="footer">
+    <div class="footer-container">
+
+      <!-- Logo & About -->
+      <div class="footer-logo">
+        <img src="./logo" alt="">
+        <h2>Allwin Baby Shop</h2>
+        <span>Happy Toys, Happy Kids</span>
+        <p>Your trusted partner for quality toys that spark imagination and create joyful memories for children of all ages.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/user/about">About Us</a></li>
+          <li><a href="/user/contact">Contact Us</a></li>
+          <li><a href="/user/contact">FAQs</a></li>
+          <li><a href="/user/shop">Shop</a></li>
+          <li><a href="/user/mall">Fun Mall</a></li>
+          <li><a href="/user/contact">Shipping Info</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div class="footer-categories">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/user/shop">Soft Toys</a></li>
+          <li><a href="/user/shop">Educational Toys</a></li>
+          <li><a href="/user/shop">Action Figures</a></li>
+          <li><a href="/user/shop">Outdoor Toys</a></li>
+          <li><a href="/user/shop">Dolls</a></li>
+          <li><a href="/user/shop">Musical Toys</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i>Allwin Baby Shop, High School Road, Thirkadai Building, Paramathi Velur, Namakkal - 638182</p>
+        <p><i class="fas fa-phone"></i>+91 99943 85838</p>
+        <p><i class="fas fa-envelope"></i>allwinbabyshop@gmail.com</p>
+
+        <div class="store-hours">
+          <strong>Store Hours</strong><br>
+          Everyday: 09:30 AM - 9:00 PM<br>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      © 2025 Allwin Baby Shop. All rights reserved. Made with <span>❤</span> for kids.
+    </div>
+  </footer>
+</main>
+
+
+<script src="./js/order.js"></script>
+
+<script src="./js/script.js"></script>
+<script src="./js/cart-number.js"></script>
+<script src="./js/perloader.js"></script>
+</body>
+</html>

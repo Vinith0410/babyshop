@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Catalogue</title>
+  <link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/add-product.css">
+
+</head>
+<body>
+
+<nav class="navbar">
+  <h2 class="logo">Admin Panel</h2>
+  <label for="menu-checkbox" class="menu-toggle">&#9776;</label>
+  <ul class="nav-links">
+    <li><a href="/admin/add-product">Add Product</a></li>
+    <li><a href="/admin/add-catalogues">Add-Catalogues</a></li>
+    <li><a href="/admin/view-product">List Products</a></li>
+    <li><a href="/admin/edit-catalogues">List Catalogues</a></li>
+    <li><a href="/admin/orders">Order Product</a></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <h2>Add Catalogue</h2>
+
+  <form action="/admin/add-catalogues" method="POST">
+    <div>
+      <label>Select Existing Catalogue</label>
+      <select id="catalogueSelect" name="existingCatalogue">
+        <option value="" selected hidden>-- Select a catalogue --</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Or Enter New Catalogue Name</label>
+      <input type="text" name="newCatalogue" placeholder="Leave empty if selecting existing">
+    </div>
+
+    <div>
+      <label>Model Name</label>
+      <input type="text" name="modelName" required>
+    </div>
+
+    <button type="submit">Save</button>
+  </form>
+</div>
+
+<script src="./js/add-catalogue.js"></script>
+<script src="./js/script.js"></script>
+
+</body>
+</html>

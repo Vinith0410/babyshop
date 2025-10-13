@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Product</title>
+  <link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/add-product.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <h2 class="logo">Admin Panel</h2>
+  <label for="menu-checkbox" class="menu-toggle">&#9776;</label>
+  <ul class="nav-links">
+    <li><a href="/admin/add-product">Add Product</a></li>
+    <li><a href="/admin/add-catalogues">Add-Catalogues</a></li>
+    <li><a href="/admin/view-product">List Products</a></li>
+    <li><a href="/admin/edit-catalogues">List Catalogues</a></li>
+    <li><a href="/admin/orders">Order Product</a></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</nav>
+
+<!-- Product Form -->
+<div class="container">
+  <h2>Add Product</h2>
+  <form action="/admin/add-product" method="POST" enctype="multipart/form-data">
+
+    <!-- Product Image -->
+    <div>
+      <label>Product Image</label>
+      <input type="file" name="image" accept="image/*" onchange="previewImage(event)" required>
+      <img id="preview" src="" alt="Image Preview" style="display:none; max-width: 200px; margin-top: 10px;">
+    </div>
+
+    <!-- Product Name -->
+    <div>
+      <label>Product Name</label>
+      <input type="text" name="name"  required>
+    </div>
+
+    <!-- Price -->
+    <div>
+      <label>Price</label>
+      <input type="number" name="price" required>
+    </div>
+
+    <!-- Discount -->
+    <div>
+      <label>Discount</label>
+      <input type="number" name="discount" placeholder="Discount (%)" required />
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label>You Tube Link</label>
+      <textarea name="description" ></textarea>
+    </div>
+
+    <!-- Extra Description -->
+    <div>
+      <label>About Product</label>
+      <textarea name="about"></textarea>
+    </div>
+
+        <!-- Stock Status -->
+    <div>
+      <label>Stock Status</label>
+      <select name="stockStatus" required>
+        <option value="In Stock">In Stock</option>
+        <option value="Out of Stock">Out of Stock</option>
+      </select>
+    </div>
+
+    <div id="colorSection">
+      <label>Colors</label>
+      <button type="button" onclick="addColorField()">+ Add Color</button>
+    </div>
+
+    <!-- 🔥 Number of models -->
+    <div>
+      <label>How many models?</label>
+      <input type="number" id="modelCount" min="1" value="1">
+      <button type="button" class="btn btn-secondary mt-2" onclick="generateModelSelectors()">Generate</button>
+    </div>
+
+    <!-- 🔥 Dynamic model selectors -->
+    <div id="modelSelectors"></div>
+
+    <button type="submit" >Save Product</button>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./js/add-product.js"></script>
+<script src="./js/script.js"></script>
+
+</body>
+</html>
