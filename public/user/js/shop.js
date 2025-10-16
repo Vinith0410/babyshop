@@ -159,6 +159,9 @@ return `
       </p>
       ${p.about ? `<p class="about">${p.about}</p>` : ""}
       ${colorsHTML}
+      <div class="stock-status ${p.stockStatus === 'In Stock' ? 'in-stock' : 'out-of-stock'}">
+        ${p.stockStatus === 'In Stock' ? '🟢 In Stock' : '🔴 Out of Stock'}
+      </div>
     </div>
 
     <!-- Buttons always at bottom -->
@@ -174,8 +177,6 @@ return `
 `;
 
   }).join("");
-
-
 
   // 👉 Attach event listeners here
   // Reattach buttons, pagination, etc.
