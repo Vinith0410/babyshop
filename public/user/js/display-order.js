@@ -31,7 +31,7 @@ async function loadUserOrders() {
       `).join("");
 
       const paymentHTML = order.paymentProof
-        ? `<img src="../..${order.paymentProof}" alt="Payment Screenshot" class="payment-screenshot">`
+        ? `<img src="${order.paymentProof}" alt="Payment Screenshot" class="payment-screenshot">`
         : `<p class="no-payment">No Payment Screenshot Uploaded</p>`;
 
       const orderDiv = document.createElement("div");
