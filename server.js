@@ -45,7 +45,7 @@ app.use("/", adminRoutes);
 app.use("/", authRoutes);
 app.use("/", resetRoutes);
 app.use("/", searchLogger);
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 // Start server
