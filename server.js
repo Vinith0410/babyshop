@@ -40,6 +40,17 @@ const searchLogger = require("./routes/search");
 const cartRoutes = require("./routes/cart");
 const orderRoutes = require("./routes/order");
 
+app.get('/uploads/*', (req, res) => {
+  const filePath = path.join(__dirname, req.path);
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.warn("File not found:", filePath);
+      res.status(404).send("File not found");
+    }
+  });
+});
+
+
 // Mount small diagnostics and static serving for uploads BEFORE other route handlers
 // so that requests to /uploads/* are served from the uploads folder and not
 // intercepted by any catch-all routes.
