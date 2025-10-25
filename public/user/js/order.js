@@ -42,9 +42,13 @@ if (!items || items.length === 0) {
         ? item.selectedColor
         : "Default Product Color";
 
+      const imageUrl = (item.image && typeof item.image === 'string')
+        ? (item.image.startsWith('/') ? item.image : '/' + item.image)
+        : '/image/shop/image/placeholder.png'; // fallback placeholder (adjust path if needed)
+
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><img src="../..${item.image}" alt="Product" width="60"></td>
+        <td><img src="${imageUrl}" alt="Product" width="60"></td>
         <td>${item.name}</td>
         <td>₹${item.price.toFixed(2)}</td>
         <td>${discount}%</td>
