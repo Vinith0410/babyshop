@@ -135,7 +135,7 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
       html: `
         <h2>New Order Alert 🚨</h2>
         <h2>Order ID: ${order._id}</h2>
-        <p>Customer: ${fullname} (${user?.email || address.email})</p>
+        <p>Customer: ${fullname} (${customerEmail || user?.email || userId})</p>
         <h3>Products Ordered</h3>
         <table border="1" cellspacing="0" cellpadding="5">
           <tr>
@@ -158,13 +158,22 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
       ]
     };
 
-    // 🔄 Background (async, don’t wait)
-    Promise.all([
-      transporter.sendMail(userMailOptions),
-      transporter.sendMail(adminMailOptions)
-    ])
-    .then(() => console.log("✅ Emails sent successfully"))
-    .catch(err => console.error("❌ Email error:", err));
+    // 🔄 Background (async, don’t wait) - send only to available recipients
+    const mailPromises = [];
+    if (customerEmail) {
+      mailPromises.push(transporter.sendMail(userMailOptions));
+    }
+    if (process.env.EMAIL_TO) {
+      mailPromises.push(transporter.sendMail(adminMailOptions));
+    }
+
+    if (mailPromises.length > 0) {
+      Promise.all(mailPromises)
+        .then(() => console.log("✅ Emails sent successfully"))
+        .catch(err => console.error("❌ Email error:", err));
+    } else {
+      console.warn("No email recipients configured; skipping sending emails for order", order._id);
+    }
 
   } catch (err) {
     console.error("Order error:", err);
@@ -315,13 +324,18 @@ router.post("/admin/orders/update-status/:id", async (req, res) => {
       `;
     }
 
-    // send mail
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: order.address.email,
-      subject,
-      html: htmlContent
-    });
+    // send mail to the best available recipient (address.email, userId, or admin fallback)
+    const recipient = order.address?.email || order.userId || process.env.EMAIL_TO;
+    if (recipient) {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: recipient,
+        subject,
+        html: htmlContent
+      });
+    } else {
+      console.warn("No recipient email available for order status update:", order._id);
+    }
 
     res.json({ message: "Status updated & email sent", order });
   } catch (err) {

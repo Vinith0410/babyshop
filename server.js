@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const path = require("path");
+const fs = require("fs");
 require("dotenv").config();
 
 const app = express();
@@ -45,11 +46,22 @@ app.use("/", adminRoutes);
 app.use("/", authRoutes);
 app.use("/", resetRoutes);
 app.use("/", searchLogger);
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static("uploads"));
 
 
 // Start server
-app.listen(3000, "0.0.0.0", () => {
-    console.log("Server running on 0.0.0.0:3000");
+// Ensure uploads directory exists (so multer can write files)
+const uploadsPath = path.join(__dirname, "uploads");
+try {
+  fs.mkdirSync(path.join(uploadsPath, "payments"), { recursive: true });
+} catch (err) {
+  console.error("Failed to create uploads directory:", err);
+}
+
+// Serve uploads with an absolute path for reliability
+app.use("/uploads", express.static(uploadsPath));
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on 0.0.0.0:${PORT}`);
 });
 
