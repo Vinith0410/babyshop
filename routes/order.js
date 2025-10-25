@@ -28,7 +28,9 @@ const transporter = nodemailer.createTransport({
 // Storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/payments/"); // folder for screenshots
+    // Store uploads under public so they are served by Express static
+    const dest = path.join(__dirname, "..", "public", "uploads", "payments");
+    cb(null, dest);
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -91,7 +93,9 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
 
     res.json({ message: "Check Your mail Box For More Information" });
     // Send emails with attachment
-    const attachmentFile = path.join(__dirname, "..", order.paymentProof);
+  // Build attachment absolute path inside public folder
+  const rel = (order.paymentProof || "").replace(/^\/+/, "");
+  const attachmentFile = path.join(__dirname, "..", "public", rel);
 
     // 🔄 Background email sending (no wait for user)
     const productList = products.map(

@@ -43,9 +43,9 @@ const orderRoutes = require("./routes/order");
 
 
 // Mount small diagnostics and static serving for uploads BEFORE other route handlers
-// so that requests to /uploads/* are served from the uploads folder and not
+// so that requests to /uploads/* are served from the public/uploads folder and not
 // intercepted by any catch-all routes.
-const uploadsPath = path.join(__dirname, "uploads");
+const uploadsPath = path.join(__dirname, "public", "uploads");
 
 // Optional diagnostics: when ENABLE_UPLOADS_LOG=true, log missing upload files
 if (process.env.ENABLE_UPLOADS_LOG === 'true') {
@@ -60,7 +60,8 @@ if (process.env.ENABLE_UPLOADS_LOG === 'true') {
   });
 }
 
-app.use('/api/uploads', express.static(uploadsPath));
+// Serve uploads from public/uploads (so files placed under public are accessible at /uploads/...)
+app.use('/uploads', express.static(uploadsPath));
 
 
 // Ensure uploads directory exists (so multer can write files)
