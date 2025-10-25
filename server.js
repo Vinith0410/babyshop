@@ -40,27 +40,43 @@ const searchLogger = require("./routes/search");
 const cartRoutes = require("./routes/cart");
 const orderRoutes = require("./routes/order");
 
-app.use("/api/order", orderRoutes);
-app.use("/api/cart", cartRoutes);
-app.use("/", adminRoutes);
-app.use("/", authRoutes);
-app.use("/", resetRoutes);
-app.use("/", searchLogger);
-app.use("/uploads", express.static("uploads"));
-
-
-// Start server
-// Ensure uploads directory exists (so multer can write files)
+// Mount small diagnostics and static serving for uploads BEFORE other route handlers
+// so that requests to /uploads/* are served from the uploads folder and not
+// intercepted by any catch-all routes.
 const uploadsPath = path.join(__dirname, "uploads");
+
+// Optional diagnostics: when ENABLE_UPLOADS_LOG=true, log missing upload files
+if (process.env.ENABLE_UPLOADS_LOG === 'true') {
+  app.use('/uploads', (req, res, next) => {
+    const filePath = path.join(uploadsPath, decodeURIComponent(req.path));
+    fs.access(filePath, fs.constants.R_OK, (err) => {
+      if (err) {
+        console.warn('[UPLOADS] Missing file requested:', filePath);
+      }
+      next();
+    });
+  });
+}
+
+app.use('/uploads', express.static(uploadsPath));
+
+// Ensure uploads directory exists (so multer can write files)
 try {
   fs.mkdirSync(path.join(uploadsPath, "payments"), { recursive: true });
 } catch (err) {
   console.error("Failed to create uploads directory:", err);
 }
 
-// Serve uploads with an absolute path for reliability
-app.use("/uploads", express.static(uploadsPath));
+// Now mount API and app routes
+app.use("/api/order", orderRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/", adminRoutes);
+app.use("/", authRoutes);
+app.use("/", resetRoutes);
+app.use("/", searchLogger);
 
+
+// Start server
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on 0.0.0.0:${PORT}`);
 });
