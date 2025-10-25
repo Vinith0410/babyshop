@@ -4,35 +4,51 @@ let filteredProducts = [];
 let currentPage = 1;
 const perPage = 12;
 
-// Fetch products
-fetch("/api/products")
-  .then(res => res.json())
-  .then(products => {
+// Fetch products AND catalogues (catalogues come from admin DB)
+Promise.all([fetch("/api/products"), fetch("/api/catalogues")])
+  .then(async ([pRes, cRes]) => {
+    const products = await pRes.json();
+    const catalogues = cRes.ok ? await cRes.json() : [];
+
     allProducts = products;
     filteredProducts = products;
-    renderFilters(products);
+    renderFilters(products, catalogues);
     renderProducts();
-  });
+  })
+  .catch(err => console.error("Failed to load products or catalogues:", err));
 
 // Render Filters dynamically
-function renderFilters(products) {
+function renderFilters(products, catalogues = []) {
   const filterContainer = document.getElementById("filters");
   const grouped = {};
 
+  // First: build from catalogues collection (admin-managed)
+  if (Array.isArray(catalogues) && catalogues.length > 0) {
+    catalogues.forEach(cat => {
+      const key = cat.name;
+      if (!grouped[key]) grouped[key] = new Set();
+      (cat.models || []).forEach(m => grouped[key].add(m));
+    });
+  }
+
+  // Also include any catalogue-model keys present on products (backwards compatibility)
   products.forEach(p => {
     (p.catalogues || []).forEach(c => {
-      const [key, value] = c.split(" - ");
+      const parts = c.split(" - ");
+      const key = parts[0] ? parts[0].trim() : c.trim();
+      const value = parts[1] ? parts[1].trim() : "";
       if (!grouped[key]) grouped[key] = new Set();
-      grouped[key].add(value);
+      if (value) grouped[key].add(value);
     });
   });
 
+  // Render
   filterContainer.innerHTML = Object.keys(grouped).map(key => `
     <div>
       <h4>${key}</h4>
       ${Array.from(grouped[key]).map(val => `
         <label>
-          <input type="checkbox" value="${val}" data-key="${key}" onchange="applyFilters()" />
+          <input type="checkbox" value="${key} - ${val}" data-key="${key}" onchange="applyFilters()" />
           ${val}
         </label><br>
       `).join("")}
@@ -46,7 +62,9 @@ function applyFilters() {
   document.querySelectorAll("#filters input:checked").forEach(cb => {
     const key = cb.getAttribute("data-key");
     if (!selected[key]) selected[key] = [];
-    selected[key].push(cb.value);
+    // cb.value may be in form 'Catalogue - Model' or just 'Model'
+    const val = cb.value.includes(' - ') ? cb.value.split(' - ')[1].trim() : cb.value;
+    selected[key].push(val);
   });
 
   filteredProducts = allProducts.filter(p => {

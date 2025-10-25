@@ -79,6 +79,24 @@ app.use("/", authRoutes);
 app.use("/", resetRoutes);
 app.use("/", searchLogger);
 
+// Catch-all 404 handler for unknown routes/files
+app.use((req, res, next) => {
+  // For API routes return JSON 404
+  if (req.path.startsWith('/api/') || req.xhr) {
+    return res.status(404).json({ error: 'Not Found' });
+  }
+
+  // For HTML requests, serve a friendly 404 page if available
+  if (req.accepts('html')) {
+    const file404 = path.join(__dirname, 'public', '404.html');
+    if (fs.existsSync(file404)) return res.status(404).sendFile(file404);
+    return res.status(404).send('<h1>404 - Page Not Found</h1>');
+  }
+
+  // Fallback to plain text
+  res.status(404).type('txt').send('404 - Not Found');
+});
+
 
 // Start server
 app.listen(PORT, "0.0.0.0", () => {
