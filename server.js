@@ -58,7 +58,8 @@ if (process.env.ENABLE_UPLOADS_LOG === 'true') {
   });
 }
 
-app.use('/uploads', express.static(uploadsPath));
+app.use('/api/uploads', express.static(uploadsPath));
+
 
 // Ensure uploads directory exists (so multer can write files)
 try {
