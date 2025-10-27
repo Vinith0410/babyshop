@@ -4,6 +4,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require("fs");
+const MongoStore = require("connect-mongo");
 require("dotenv").config();
 
 const app = express();
@@ -22,9 +23,19 @@ app.use(express.static(path.join(__dirname, "public"), {
 }));
 
 app.use(session({
-  secret: "otp-secret",
+  secret: process.env.SESSION_SECRET || "otp-secret",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,      // Store sessions in MongoDB
+    ttl: 50 * 24 * 60 * 60,               // Expiry: 50 days (in seconds)
+    autoRemove: 'native'
+  }),
+  cookie: {
+    maxAge: 50 * 24 * 60 * 60 * 1000,     // 50 days
+    httpOnly: true,
+    secure: false,                         // true only if HTTPS
+  }
 }));
 
 // Connect DB

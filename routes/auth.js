@@ -22,6 +22,83 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// --- Google OAuth routes (simple OAuth2 without passport)
+// Requires environment variables: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK
+const googleAuthUrl = (state) => {
+  const params = new URLSearchParams({
+    client_id: process.env.GOOGLE_CLIENT_ID || '',
+    redirect_uri: process.env.GOOGLE_CALLBACK || '',
+    response_type: 'code',
+    scope: 'openid email profile',
+    access_type: 'offline',
+    prompt: 'select_account',
+    state: state || ''
+  });
+  return `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+};
+
+router.get('/auth/google', (req, res) => {
+  // Validate Google OAuth configuration before redirecting
+  const missing = [];
+  if (!process.env.GOOGLE_CLIENT_ID) missing.push('GOOGLE_CLIENT_ID');
+  if (!process.env.GOOGLE_CLIENT_SECRET) missing.push('GOOGLE_CLIENT_SECRET');
+  if (!process.env.GOOGLE_CALLBACK) missing.push('GOOGLE_CALLBACK');
+
+  if (missing.length) {
+    const msg = `Missing Google OAuth config: ${missing.join(', ')}. Please set these in your environment or .env file.`;
+    console.error(msg);
+    // Show a friendly page instead of redirecting to Google with missing params
+    return res.status(500).send(`<h2>Google OAuth not configured</h2><p>${msg}</p><p><a href="/login">Back to login</a></p>`);
+  }
+
+  // optional state could be used to redirect after login
+  res.redirect(googleAuthUrl());
+});
+
+router.get('/auth/google/callback', async (req, res) => {
+  const code = req.query.code;
+  if (!code) return res.redirect('/login');
+
+  try {
+    // Exchange code for tokens
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        code,
+        client_id: process.env.GOOGLE_CLIENT_ID || '',
+        client_secret: process.env.GOOGLE_CLIENT_SECRET || '',
+        redirect_uri: process.env.GOOGLE_CALLBACK || '',
+        grant_type: 'authorization_code'
+      })
+    });
+
+    const tokenData = await tokenRes.json();
+    if (!tokenData.id_token) return res.redirect('/login');
+
+    // decode JWT payload (id_token)
+    const parts = tokenData.id_token.split('.');
+    const payload = JSON.parse(Buffer.from(parts[1].replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8'));
+
+    const email = payload.email;
+    const name = payload.name || payload.email.split('@')[0];
+
+    if (!email) return res.redirect('/login');
+
+    // find or create user
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = await User.create({ name, email, password: '' });
+    }
+
+    req.session.user = { id: user._id, name: user.name, email: user.email };
+    return res.redirect('/user/home');
+  } catch (err) {
+    console.error('Google OAuth error:', err);
+    return res.redirect('/login');
+  }
+});
+
 // Register page
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "register.html"));
