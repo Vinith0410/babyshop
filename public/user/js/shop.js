@@ -14,6 +14,20 @@ Promise.all([fetch("/api/products"), fetch("/api/catalogues")])
     filteredProducts = products;
     renderFilters(products, catalogues);
     renderProducts();
+
+    // Check if there's a category to filter by from home page
+    const selectedCategory = sessionStorage.getItem('selectedCategory');
+    if (selectedCategory) {
+      // Find and click the checkbox for this category
+      document.querySelectorAll('#filters input[type="checkbox"]').forEach(cb => {
+        if (cb.value.startsWith(selectedCategory)) {
+          cb.checked = true;
+          applyFilters();
+        }
+      });
+      // Clear the selected category
+      sessionStorage.removeItem('selectedCategory');
+    }
   })
   .catch(err => console.error("Failed to load products or catalogues:", err));
 
@@ -27,23 +41,62 @@ function renderFilters(products, catalogues = []) {
     catalogues.forEach(cat => {
       const key = cat.name;
       if (!grouped[key]) grouped[key] = new Set();
-      (cat.models || []).forEach(m => grouped[key].add(m));
+      // Filter out empty or duplicate models
+      (cat.models || []).forEach(m => {
+        if (m && m.trim()) {
+          grouped[key].add(m.trim());
+        }
+      });
     });
   }
 
   // Also include any catalogue-model keys present on products (backwards compatibility)
-  products.forEach(p => {
-    (p.catalogues || []).forEach(c => {
-      const parts = c.split(" - ");
-      const key = parts[0] ? parts[0].trim() : c.trim();
-      const value = parts[1] ? parts[1].trim() : "";
-      if (!grouped[key]) grouped[key] = new Set();
-      if (value) grouped[key].add(value);
+  // If admin-managed catalogues exist, only add product values to those keys.
+  // This prevents stray headings (e.g. 'Age') appearing when they are not
+  // present in the admin `catalogues` collection.
+  if (Array.isArray(catalogues) && catalogues.length > 0) {
+    // First, verify which products actually have these values
+    const productValueCounts = {};
+    products.forEach(p => {
+      (p.catalogues || []).forEach(c => {
+        if (!c || typeof c !== 'string') return; // skip invalid
+        const parts = c.split(" - ");
+        const key = parts[0] ? parts[0].trim() : c.trim();
+        const value = parts[1] ? parts[1].trim() : "";
+
+        if (value && grouped[key]) {
+          if (!productValueCounts[key]) {
+            productValueCounts[key] = new Set();
+          }
+          productValueCounts[key].add(value);
+        }
+      });
     });
-  });
+
+    // Only add values that actually exist in products
+    Object.keys(productValueCounts).forEach(key => {
+      productValueCounts[key].forEach(value => {
+        grouped[key].add(value);
+      });
+    });
+  } else {
+    // No admin catalogues available — fall back to deriving groups from products
+    products.forEach(p => {
+      (p.catalogues || []).forEach(c => {
+        if (!c || typeof c !== 'string') return;
+        const parts = c.split(" - ");
+        const key = parts[0] ? parts[0].trim() : c.trim();
+        const value = parts[1] ? parts[1].trim() : "";
+        if (!grouped[key]) grouped[key] = new Set();
+        if (value) grouped[key].add(value);
+      });
+    });
+  }
 
   // Render
-  filterContainer.innerHTML = Object.keys(grouped).map(key => `
+  // Only render catalogue sections that have at least one model/value
+  const keysToRender = Object.keys(grouped).filter(k => grouped[k] && grouped[k].size > 0);
+  filterContainer.innerHTML = keysToRender.map(key => `
     <div>
       <h4>${key}</h4>
       ${Array.from(grouped[key]).map(val => `
@@ -67,14 +120,29 @@ function applyFilters() {
     selected[key].push(val);
   });
 
-  filteredProducts = allProducts.filter(p => {
-    return Object.keys(selected).every(k => {
-      return (p.catalogues || []).some(c => {
-        const [key, value] = c.split(" - ");
-        return key === k && selected[k].includes(value);
+  // If no filters selected, show all products
+  if (Object.keys(selected).length === 0) {
+    filteredProducts = allProducts;
+  } else {
+    // Show products that match ANY of the selected filters (OR logic)
+    filteredProducts = allProducts.filter(p => {
+      // Make sure product has valid catalogues
+      if (!p.catalogues || !Array.isArray(p.catalogues)) return false;
+
+      // Check if product matches any selected filter
+      return Object.keys(selected).some(category => {
+        return p.catalogues.some(c => {
+          if (!c || typeof c !== 'string') return false;
+          const parts = c.split(" - ");
+          const key = parts[0] ? parts[0].trim() : '';
+          const value = parts[1] ? parts[1].trim() : '';
+
+          // Only match if both category and value are valid
+          return key === category && value && selected[category].includes(value);
+        });
       });
     });
-  });
+  }
 
   currentPage = 1;
   renderProducts();
@@ -142,8 +210,8 @@ function renderProducts() {
   }
 
   container.innerHTML = pageProducts.map((p, idx) => {
-    const discount = p.discount || 0;
-    const finalPrice = Math.round(p.price * (1 - discount / 100));
+  const discount = p.discount || 0;
+  const finalPrice = Math.round(p.price || 0); // sale price
     const productName = capitalizeWords(p.name);
 
     let colorsHTML = "";
@@ -167,13 +235,17 @@ return `
         <img src="${p.image}" alt="${p.name}">
         ${discount > 0 ? `<span class="discount-badge">${discount}% OFF</span>` : ""}
       </div>
-      <div class="tags">
-        ${(p.catalogues || []).map(c => `<span class="tag">${c}</span>`).join(" ")}
-      </div>
       <h4 class="product-name">${productName}</h4>
+      <div class="product-details">
+        <strong>Details:</strong>
+        ${(p.catalogues || []).map(c => {
+          const [category, value] = c.split(" - ");
+          return `${category}: ${value || category}`;
+        }).join(", ")}
+      </div>
       <p class="price">
         <span class="final-price">₹${finalPrice}</span>
-        <span class="old-price">₹${p.price}</span>
+        ${p.mrp ? `<span class="old-price">₹${p.mrp}</span>` : ''}
       </p>
       ${p.about ? `<p class="about">${p.about}</p>` : ""}
       ${colorsHTML}
@@ -187,7 +259,7 @@ return `
       <button class="view-btn"
           data-video="${p.description}"
           ${!p.description ? "disabled style='opacity:0.5; cursor:not-allowed;'" : ""}>
-        VIEW PRODUCT
+        PRODUCT VIDEO
       </button>
       <button class="cart-btn" data-idx="${idx}">ADD TO CART</button>
     </div>

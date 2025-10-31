@@ -117,8 +117,8 @@ async function loadProduct() {
 
     document.getElementById('productId').value = data._id;
     document.getElementById('name').value = data.name;
-    document.getElementById('price').value = data.price;
-    document.getElementById('discount').value = data.discount ;
+  document.getElementById('price').value = data.price;
+  document.getElementById('mrp').value = data.mrp || '';
     document.getElementById('description').value = data.description ;
     document.getElementById('about').value = data.about;
 

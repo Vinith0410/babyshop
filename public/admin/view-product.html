@@ -22,13 +22,21 @@
   </ul>
 </nav>
 
-<h2>All Products</h2>
-  <div class="content-section"></div>
+<div class="filter-section">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search products by name...">
+  </div>
+  <div class="catalogue-filter">
+    <select id="catalogueFilter">
+      <option value="">All Catalogues</option>
+      <!-- Will be populated dynamically -->
+    </select>
+  </div>
+</div>
 
+<div class="content-section"></div>
 
-<script src="./js/view-product.js">
-
-</script>
+<script src="./js/view-product.js"></script>
 
 
 <script src="./js/script.js">

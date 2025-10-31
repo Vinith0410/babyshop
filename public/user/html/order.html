@@ -80,6 +80,10 @@
   <span id="totalPrice">Total Price: ₹0.00</span>
 </div>
 
+
+<!-- Saved addresses will be rendered here (if any). Moved below the form as requested -->
+<div id="savedAddressesContainer" style="display:none; margin-top:12px; margin-bottom:18px;"></div>
+
 <!-- Delivery Address Form -->
 <h3 id="addressHeading" style="display:none;">Delivery Address</h3>
 <form id="deliveryForm" style="display:none;">
@@ -91,6 +95,11 @@
   <input type="text" name="city" placeholder="City" required><br>
   <input type="text" name="state" placeholder="State" required><br>
   <input type="text" name="pincode" placeholder="Pincode" required><br>
+  <div class="checkbox-container">
+    <input type="checkbox" id="saveAddress" name="saveAddress">
+    <span>Save this address for future orders</span>
+  </div>
+
 <h3>Choose Payment Method</h3>
 
 <div class="payment-options">
@@ -126,6 +135,7 @@
 <img id="previewImg" src="" style="display:none; width:150px; margin-top:10px;" />
   <button type="submit">Confirm Order</button>
 </form>
+
 
 <!-- footer content -->
 
@@ -175,7 +185,7 @@
       <!-- Contact -->
       <div class="footer-contact">
         <h3>Contact Us</h3>
-        <p><i class="fas fa-map-marker-alt"></i>Allwin Baby Shop, High School Road, Thirkadai Building, Paramathi Velur, Namakkal - 638182</p>
+        <p><i class="fas fa-map-marker-alt"></i>Allwin Baby Shop, High School Road, Therkadai Building, Paramathi Velur, Namakkal - 638182</p>
         <p><i class="fas fa-phone"></i>+91 99943 85838</p>
         <p><i class="fas fa-envelope"></i>allwinbabyshop@gmail.com</p>
 

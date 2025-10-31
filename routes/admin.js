@@ -49,7 +49,11 @@ router.get("/admin/edit-catalogues", (req, res) => {
 // Add Product
 router.post("/admin/add-product", upload.single("image"), async (req, res) => {
   try {
-    const { name, price, discount, description, about, stockStatus } = req.body;
+    const { name, price: priceRaw, mrp: mrpRaw, discount: discountRaw, description, about, stockStatus } = req.body;
+    const price = parseFloat(priceRaw) || 0;
+    const mrp = parseFloat(mrpRaw) || 0;
+    // compute discount from mrp and sale price if mrp provided
+    const discount = mrp > 0 ? Math.round(((mrp - price) / mrp) * 100) : (parseFloat(discountRaw) || 0);
 
     // Handle catalogues
     let catalogues = req.body["catalogues[]"] || req.body.catalogues;
@@ -65,13 +69,14 @@ router.post("/admin/add-product", upload.single("image"), async (req, res) => {
     }
     colors = colors.map(c => c.trim());
 
-    // Handle image
-    const image = req.file ? `/uploads/${req.file.filename}` : "";
+  // Handle image
+  const image = req.file ? `/uploads/${req.file.filename}` : "";
 
     const newProduct = new Product({
       image,
       name,
       price,
+      mrp,
       discount,
       description,
       about,
@@ -127,8 +132,12 @@ router.get("/admin/edit-product/:id", async (req, res) => {
 // Update Product
 router.post("/admin/edit-product/:id", upload.single("image"), async (req, res) => {
   try {
-    const { name, price, discount, description, catalogues,about,stockStatus  } = req.body;
-    const colors = req.body["colors[]"] || req.body.colors || [];
+  const { name, price: priceRaw, mrp: mrpRaw, discount: discountRaw, description, catalogues,about,stockStatus  } = req.body;
+  const colors = req.body["colors[]"] || req.body.colors || [];
+
+  const price = parseFloat(priceRaw) || 0;
+  const mrp = parseFloat(mrpRaw) || 0;
+  const discount = mrp > 0 ? Math.round(((mrp - price) / mrp) * 100) : (parseFloat(discountRaw) || 0);
 
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).send("Product not found");
@@ -141,9 +150,10 @@ router.post("/admin/edit-product/:id", upload.single("image"), async (req, res) 
     }
 
     // Update product fields
-    product.name = name;
-    product.price = price;
-    product.discount = discount;
+  product.name = name;
+  product.price = price;
+  product.mrp = mrp;
+  product.discount = discount;
     product.description = description;
     product.about = about;
     product.catalogues = catalogues;

@@ -58,7 +58,7 @@
                   <td>${p.selectedColor}</td>
                   <td>${p.price}</td>
                   <td>${p.discount || 0}%</td>
-                  <td>$${p.subtotal}</td>
+                  <td>₹${p.subtotal}</td>
 
                 </tr>
               `).join("")}

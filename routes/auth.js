@@ -101,13 +101,26 @@ router.get('/auth/google/callback', async (req, res) => {
 
 // Register page
 router.get("/", (req, res) => {
+   if (req.session.user) {
+    if (req.session.user.email === "admin123@gmail.com") {
+      return res.redirect("/admin/home");
+    }
+    return res.redirect("/user/home");
+  }
   res.sendFile(path.join(__dirname, "../public", "register.html"));
 });
 
 // Login page
 router.get("/login", (req, res) => {
+  if (req.session.user) {
+    if (req.session.user.email === "admin123@gmail.com") {
+      return res.redirect("/admin/home");
+    }
+    return res.redirect("/user/home");
+  }
   res.sendFile(path.join(__dirname, "../public", "login.html"));
 });
+
 
 // OTP page
 router.get("/verify", (req, res) => {

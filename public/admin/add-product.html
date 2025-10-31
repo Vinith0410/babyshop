@@ -40,16 +40,17 @@
       <input type="text" name="name"  required>
     </div>
 
-    <!-- Price -->
+    <!-- MRP and Sale Price -->
     <div>
-      <label>Price</label>
-      <input type="number" name="price" required>
+      <label>MRP (Maximum Retail Price)</label>
+      <input type="tel" name="mrp" step="0.01" required>
     </div>
-
-    <!-- Discount -->
     <div>
-      <label>Discount</label>
-      <input type="number" name="discount" placeholder="Discount (%)" required />
+      <label>Sale Price</label>
+      <input type="tel" name="price" step="0.01" required>
+    </div>
+    <div>
+      <small>Discount will be calculated automatically from MRP and Sale Price.</small>
     </div>
 
     <!-- Description -->

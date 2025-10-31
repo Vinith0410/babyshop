@@ -22,6 +22,35 @@ if (!items || items.length === 0) {
     document.getElementById("deliveryForm").style.display = "block";
     document.getElementById("addressHeading").style.display = "block";
 
+    // Prefill delivery form with logged-in user info (name/email)
+    try {
+      const fullnameInput = document.querySelector('input[name="fullname"]');
+      const emailInput = document.querySelector('input[name="email"]');
+      if (fullnameInput) fullnameInput.value = user.name || '';
+      if (emailInput) emailInput.value = user.email || '';
+    } catch (e) {
+      // ignore if inputs not present
+    }
+
+      // Load saved addresses for this user and render them as cards above the form
+      try {
+    const addrRes = await fetch(`/api/order/addresses/${encodeURIComponent(user.email)}`);
+        if (addrRes.ok) {
+          const addrData = await addrRes.json();
+          const saved = (addrData && addrData.addresses) || [];
+          renderSavedAddresses(saved);
+          // show container if addresses exist
+          const container = document.getElementById('savedAddressesContainer');
+          if (saved.length > 0) {
+            container.style.display = 'block';
+          } else {
+            container.style.display = 'none';
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to load saved addresses', err);
+      }
+
 
     const orderBody = document.getElementById("orderBody");
     const orderSummary = document.getElementById("orderSummary");
@@ -78,6 +107,11 @@ document.getElementById("deliveryForm").addEventListener("submit", async (e) => 
   const userRes = await fetch("/get-user");
   const user = await userRes.json();
   formData.append("userId", user.email);
+  // include session user info for address saving
+  formData.append("userName", user.name || "");
+  formData.append("userEmail", user.email || "");
+  // NOTE: do NOT append the checkbox value manually — the form already contains the
+  // checkbox input named "saveAddress" and FormData(e.target) will include it when checked.
 
   try {
     const res = await fetch("/api/order/confirm", {
@@ -125,3 +159,80 @@ function showPayment(type, btn) {
   });
 
 loadOrderSummary();
+
+
+  // ------------------ Saved address helpers ------------------
+  function renderSavedAddresses(addresses) {
+    const container = document.getElementById('savedAddressesContainer');
+    container.innerHTML = '';
+    if (!addresses || addresses.length === 0) return;
+
+    addresses.forEach((a, idx) => {
+      const card = document.createElement('div');
+      card.className = 'address-card';
+      card.style = 'border:1px solid #ddd; padding:10px; margin-bottom:8px; border-radius:6px; background:#fff;';
+
+      const html = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div style="flex:1">
+            <strong>${escapeHtml(a.fullname || '')}</strong><br>
+            <small>${escapeHtml(a.address || '')} ${escapeHtml(a.building || '')}</small><br>
+            <small>${escapeHtml(a.city || '')}, ${escapeHtml(a.state || '')} - ${escapeHtml(a.pincode || '')}</small><br>
+            <small class="mail">📧 ${escapeHtml(a.email || '').toLowerCase()} • 📞 ${escapeHtml(a.mobile || '')}</small>
+          </div>
+          <div style="margin-left:12px">
+            <button type="button" data-idx="${idx}" class="use-address-btn">Use this address</button>
+          </div>
+        </div>
+      `;
+
+      card.innerHTML = html;
+      container.appendChild(card);
+    });
+
+    // Attach click handlers
+    container.querySelectorAll('.use-address-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(btn.getAttribute('data-idx'), 10);
+        const addresses = window.__savedAddresses || [];
+        const a = addresses[idx];
+        if (a) {
+          populateFormFromAddress(a);
+          // scroll to form
+          document.getElementById('deliveryForm').scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // keep addresses in a global var for use by buttons
+    window.__savedAddresses = addresses;
+  }
+
+  function populateFormFromAddress(a) {
+    try {
+      const set = (name, val) => {
+        const el = document.querySelector(`[name="${name}"]`);
+        if (el) el.value = val || '';
+      };
+      set('fullname', a.fullname);
+      set('email', a.email);
+      set('mobile', a.mobile);
+      set('address', a.address);
+      set('building', a.building);
+      set('city', a.city);
+      set('state', a.state);
+      set('pincode', a.pincode);
+    } catch (err) {
+      console.warn('Failed to populate form from address', err);
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }

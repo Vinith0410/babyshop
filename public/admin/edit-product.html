@@ -32,16 +32,17 @@
               <input type="text" name="name" id="name" required>
             </div>
 
-            <!-- Price -->
-            <div >
-              <label for="price">Price</label>
-              <input type="number" name="price" id="price" required>
-            </div>
-
-            <!-- Discount -->
+            <!-- MRP and Sale Price -->
             <div>
-              <label for="discount">Discount</label>
-              <input type="number" name="discount" id="discount">
+              <label for="mrp">MRP (Maximum Retail Price)</label>
+              <input type="number" name="mrp" id="mrp" step="0.01" required>
+            </div>
+            <div >
+              <label for="price">Sale Price</label>
+              <input type="number" name="price" id="price" step="0.01" required>
+            </div>
+            <div>
+              <small>Discount will be recalculated automatically from MRP and Sale Price.</small>
             </div>
 
             <!-- Description -->

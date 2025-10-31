@@ -27,16 +27,17 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,      // Store sessions in MongoDB
-    ttl: 50 * 24 * 60 * 60,               // Expiry: 50 days (in seconds)
-    autoRemove: 'native'
+    mongoUrl: process.env.MONGO_URI,
+    ttl: 50 * 24 * 60 * 60,   // keep sessions 50 days
   }),
   cookie: {
-    maxAge: 50 * 24 * 60 * 60 * 1000,     // 50 days
     httpOnly: true,
-    secure: false,                         // true only if HTTPS
+    secure: false,            // true only if HTTPS
+    sameSite: "lax",
+    maxAge: 50 * 24 * 60 * 60 * 1000 // 50 days
   }
 }));
+
 
 // Connect DB
 mongoose.connect(process.env.MONGO_URI)

@@ -3,6 +3,7 @@ const router = express.Router();
 const Order = require("../models/Order");
 const Cart = require("../models/Cart");
 const User = require("../models/User"); // to get user info
+const Address = require("../models/Address");
 const nodemailer = require("nodemailer");
 const ExcelJS = require("exceljs");
 const multer = require("multer");
@@ -20,8 +21,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS, // App Password if using Gmail
   },
   tls: {
-    ciphers: "SSLv3",
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    ciphers: "SSLv3"
   }
 });
 
@@ -91,7 +92,60 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
       Cart.deleteMany({ userId })
     ]);
 
-    res.json({ message: "Check Your mail Box For More Information" });
+    let addressSaved = false;
+
+    // If user checked "save address", persist it into Address collection
+    try {
+      const saveFlag = req.body.saveAddress;
+      // log body for debugging
+      console.log('Order.confirm req.body saveAddress=', saveFlag, 'userId=', req.body.userId);
+      // handle checkbox value which can be string, boolean, number, or array (when duplicate fields present)
+      const normalize = v => (v === null || v === undefined) ? '' : String(v).toLowerCase();
+      const matchesTrue = v => ['1', 'on', 'true', 'yes'].includes(normalize(v));
+      let shouldSave = false;
+      if (Array.isArray(saveFlag)) {
+        shouldSave = saveFlag.some(matchesTrue);
+      } else {
+        shouldSave = matchesTrue(saveFlag);
+      }
+      if (shouldSave) {
+        const uid = (userId || req.body.userId || '').toString().trim();
+        const addressEntry = {
+          fullname: (fullname || '').toString().trim(),
+          email: (customerEmail || email || '').toString().trim(),
+          mobile: (mobile || '').toString().trim(),
+          address: (address || '').toString().trim(),
+          building: (building || '').toString().trim(),
+          city: (city || '').toString().trim(),
+          state: (state || '').toString().trim(),
+          pincode: (pincode || '').toString().trim(),
+          isDefault: false,
+          createdAt: new Date()
+        };
+
+        const upsertResult = await Address.findOneAndUpdate(
+          { userId: uid },
+          {
+            $set: {
+              userId: uid,
+              userName: (req.body.userName || user?.name || "").toString().trim(),
+              userEmail: (req.body.userEmail || customerEmail || user?.email || "").toString().trim()
+            },
+            $push: { addresses: addressEntry }
+          },
+          { upsert: true, new: true }
+        );
+        console.log('Saved delivery address for user', uid, 'result id=', upsertResult?._id);
+        if (upsertResult) addressSaved = true;
+      } else {
+        console.log('Save address flag not set, skipping save');
+      }
+    } catch (addrErr) {
+      console.error('Failed to save address:', addrErr);
+      // continue without blocking order confirmation
+    }
+
+  res.json({ message: "Check Your mail Box For More Information", addressSaved });
     // Send emails with attachment
   // Build attachment absolute path inside public folder
   const rel = (order.paymentProof || "").replace(/^\/+/, "");
@@ -105,7 +159,7 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
           <td>${p.name}</td>
           <td>${p.selectedColor}</td>
           <td>${p.qty}</td>
-          <td>$${p.subtotal}</td>
+          <td>₹${p.subtotal}</td>
         </tr>`
     ).join("");
 
@@ -128,7 +182,7 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
           ${productList}
         </table>
         <p><b>Total Quantity:</b> ${totalQty}</p>
-        <p><b>Total Price:</b> $${Math.round(totalPrice)}</p>
+        <p><b>Total Price:</b> ₹${Math.round(totalPrice)}</p>
       `
     };
 
@@ -152,7 +206,7 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
           ${productList}
         </table>
         <p><b>Total Quantity:</b> ${totalQty}</p>
-        <p><b>Total Price:</b> $${Math.round(totalPrice)}</p>
+        <p><b>Total Price:</b> ₹${Math.round(totalPrice)}</p>
       `,
        attachments: [
         {
@@ -219,6 +273,20 @@ router.get("/my-orders", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
+  }
+});
+
+// API: get saved addresses for a user (by userId/email)
+// Route mounted under /api/order -> full path: /api/order/addresses/:userId
+router.get('/addresses/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const addrDoc = await Address.findOne({ userId });
+    if (!addrDoc) return res.json({ userId, userName: '', userEmail: '', addresses: [] });
+    res.json({ userId: addrDoc.userId, userName: addrDoc.userName || '', userEmail: addrDoc.userEmail || '', addresses: addrDoc.addresses || [] });
+  } catch (err) {
+    console.error('Failed to get addresses:', err);
+    res.status(500).json({ error: 'Failed to get addresses' });
   }
 });
 
@@ -323,7 +391,7 @@ router.post("/admin/orders/update-status/:id", async (req, res) => {
         </table>
 
         <p><b>Total Quantity:</b> ${order.totalQty}</p>
-        <p><b>Total Price:</b> $${order.totalPrice}</p>
+        <p><b>Total Price:</b> ₹${order.totalPrice}</p>
         <p><b>Estimated Delivery:</b> ${deliveryTime}</p>
       `;
     }
