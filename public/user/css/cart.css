@@ -18,7 +18,6 @@ table {
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.8s ease-in-out;
-  text-transform: capitalize;
 }
 
 th,

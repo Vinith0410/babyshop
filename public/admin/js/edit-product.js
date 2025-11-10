@@ -125,6 +125,10 @@ async function loadProduct() {
     document.getElementById('currentImage').src = data.image;
     document.getElementById('stockStatus').value = data.stockStatus || "In Stock";
 
+  // Delivery charge
+  const dcEl = document.getElementById('deliveryCharge');
+  if (dcEl) dcEl.value = typeof data.deliveryCharge !== 'undefined' ? data.deliveryCharge : 0;
+
     // Catalogues
     const container = document.getElementById("catalogueContainer");
     container.innerHTML = "";

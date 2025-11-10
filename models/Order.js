@@ -31,6 +31,10 @@ const orderSchema = new mongoose.Schema({
     enum: ["Ordered", "Processing", "Shipped","Delivered"],
     default: "Ordered"
   },
+    deliveryCharge: {
+    type: Number,
+    default: 0
+  },
   paymentProof: {
   type: String, // file path of uploaded payment screenshot
   required: true

@@ -43,7 +43,7 @@ const upload = multer({ storage });
 // Confirm order
 router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
  try {
-    const { userId, fullname, email, mobile, address, building, city, state, pincode } = req.body;
+    const { userId, fullname, email, mobile, address, building, city, state, pincode, deliverycharge, total } = req.body;
 
     if (!req.file) return res.status(400).json({ error: "Payment screenshot required" });
 
@@ -64,7 +64,7 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
       const subtotal = finalPrice * item.qty;
 
       totalQty += item.qty;
-      totalPrice += subtotal;
+      totalPrice += parseFloat(total) || 0;
 
       return {
         productId: item.productId,
@@ -84,6 +84,7 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
       totalQty,
       totalPrice: Math.round(totalPrice),
       address: { fullname, email, mobile, address, building, city, state, pincode },
+      deliveryCharge: parseFloat(deliverycharge) || 0,
       paymentProof: `/uploads/payments/${req.file.filename}`
     });
 
@@ -182,7 +183,10 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
           ${productList}
         </table>
         <p><b>Total Quantity:</b> ${totalQty}</p>
+        <p><b>Delivery Charge:</b> ₹${Math.round(deliverycharge)}</p>
         <p><b>Total Price:</b> ₹${Math.round(totalPrice)}</p>
+        <p>We will notify you once your order is shipped. Thank you for shopping with us!</p>
+
       `
     };
 
@@ -206,6 +210,7 @@ router.post("/confirm", upload.single("paymentProof"), async (req, res) => {
           ${productList}
         </table>
         <p><b>Total Quantity:</b> ${totalQty}</p>
+        <p><b>Delivery Charge:</b> ₹${Math.round(deliverycharge)}</p>
         <p><b>Total Price:</b> ₹${Math.round(totalPrice)}</p>
       `,
        attachments: [

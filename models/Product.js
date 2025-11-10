@@ -13,6 +13,11 @@ const productSchema = new mongoose.Schema({
     type: [String],
     default: [],   // if no colors, just store empty array
   },
+  // Delivery charge for this product (number, in your currency). Default 0.
+  deliveryCharge: {
+    type: Number,
+    default: 0
+  },
     stockStatus: {
     type: String,
     enum: ["In Stock", "Out of Stock"],

@@ -56,7 +56,7 @@ async function loadUserOrders() {
               <th>Name</th>
               <th>Color</th>
               <th>Qty</th>
-              <th>Subtotal</th>
+              <th>Price</th>
             </tr>
             ${productsHTML}
           </table>

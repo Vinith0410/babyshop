@@ -18,6 +18,11 @@ const cartSchema = new mongoose.Schema({
     type: String,
     default: "Default"
   },
+  // delivery charge for the cart item (copied from product at add-to-cart time)
+  deliveryCharge: {
+    type: Number,
+    default: 0
+  },
   subtotal: Number
 });
 

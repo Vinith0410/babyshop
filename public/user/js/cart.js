@@ -1,4 +1,5 @@
 async function loadCart() {
+  showFreeDeliveryBanner();
   try {
     // Get logged-in user
     const userRes = await fetch("/get-user");
@@ -76,6 +77,25 @@ async function loadCart() {
   } catch (err) {
     console.error("Error loading cart:", err);
   }
+}
+
+// free delivery banner (top-level)
+function showFreeDeliveryBanner() {
+  if (document.getElementById('freeDeliveryBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'freeDeliveryBanner';
+  banner.style = 'background:linear-gradient(90deg,#ff69b4,#ff1493);color:#fff;padding:8px;text-align:center;font-weight:700;margin-bottom:12px;';
+  banner.textContent = 'Free delivery across Tamil Nadu 🇮🇳';
+
+  // Prefer to insert the banner right below the cart heading if present
+  const heading = document.querySelector('.cart-heading') || document.getElementById('cart-heading');
+  if (heading && heading.parentNode) {
+    heading.insertAdjacentElement('afterend', banner);
+    return;
+  }
+
+  const target = document.getElementById('main-content') || document.body;
+  if (target) target.prepend(banner);
 }
 
 async function deleteItem(itemId) {

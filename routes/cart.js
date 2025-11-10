@@ -6,7 +6,7 @@ const Product = require("../models/Product");
 // Add to cart
 router.post("/", async (req, res) => {
   try {
-    const { userId, productId, name, image, price, colors , discount, qty } = req.body;
+    const { userId, productId, name, image, price, colors , discount, qty, deliveryCharge } = req.body;
 
     // Check if item already exists in cart for this user
     let cartItem = await Cart.findOne({ userId, productId });
@@ -27,6 +27,10 @@ router.post("/", async (req, res) => {
       availableColors: colors || [],
       selectedColor: colors && colors.length > 0 ? colors[0] : "Default"  // ✅ set default
     });
+    // store delivery charge per item (if provided)
+    if (typeof deliveryCharge !== 'undefined') {
+      cartItem.deliveryCharge = parseFloat(deliveryCharge) || 0;
+    }
 
     await cartItem.save();
     res.json({ message: "Added to cart!" });

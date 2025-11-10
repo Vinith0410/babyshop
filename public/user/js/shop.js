@@ -2,7 +2,18 @@
 let allProducts = [];
 let filteredProducts = [];
 let currentPage = 1;
-const perPage = 12;
+const perPage = 15;
+
+// Show a small banner indicating free delivery across Tamil Nadu
+function showFreeDeliveryBanner() {
+  if (document.getElementById('freeDeliveryBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'freeDeliveryBanner';
+  banner.style = 'background:linear-gradient(90deg,#ff69b4,#ff1493);color:#fff;padding:8px;text-align:center;font-weight:700;margin-bottom:12px;';
+  banner.textContent = 'Free delivery across Tamil Nadu 🇮🇳';
+  const target = document.querySelector('.content') || document.getElementById('main-content') || document.body;
+  if (target) target.prepend(banner);
+}
 
 // Fetch products AND catalogues (catalogues come from admin DB)
 Promise.all([fetch("/api/products"), fetch("/api/catalogues")])
@@ -14,6 +25,7 @@ Promise.all([fetch("/api/products"), fetch("/api/catalogues")])
     filteredProducts = products;
     renderFilters(products, catalogues);
     renderProducts();
+  showFreeDeliveryBanner();
 
     // Check if there's a category to filter by from home page
     const selectedCategory = sessionStorage.getItem('selectedCategory');
@@ -340,6 +352,7 @@ async function addToCart(item) {
       name: item.name,
       image: item.image,
       price: item.price,
+      deliveryCharge: item.deliveryCharge || 0,
       discount:item.discount,
       colors:item.colors,
       qty: 1
